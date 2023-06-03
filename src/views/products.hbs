@@ -1,0 +1,16 @@
+<h1>PRODUCTOS</h1>
+<br/>
+
+<p>Bienvenido {{email}}</p>
+
+<ul>
+    {{#each products}}
+    <li>Product: {{this.title}} </li>
+    <p>description: {{this.description}} </p>
+    <p>price: {{this.price}} </p>
+   
+    <hr>
+    {{/each}}
+</ul>
+
+<a href="/api/sessions/logout">Cerrar sesion</a>
