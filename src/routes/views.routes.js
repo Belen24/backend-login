@@ -27,7 +27,7 @@ router.get("/products", async (req, res) => {
     try {
       console.log(req.session.user);
       const products = await productsModel.find().lean();
-      res.render("products", { email: req.session.user.email, products: products });
+      res.render("products", { email: req.user.email, products: products });
     } catch (error) {
       console.log(error);
       res.send("Hubo un error al cargar los productos");

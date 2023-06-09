@@ -6,6 +6,8 @@ import { options } from "./config/options.js";
 import { connectDB } from "./config/dbConnection.js";
 import { __dirname } from "./utils.js";
 import path from "path";
+import passport from "passport";
+import { initializePassport } from "./config/passport.config.js";
 
 import { viewsRouter } from "./routes/views.routes.js";
 import { authRouter } from "./routes/auth.routes.js";
@@ -22,7 +24,7 @@ app.listen(port,()=>console.log(`Server listening on port ${port}`));
 
 connectDB();
 
-//configuracion de session
+//configuración de session
 app.use(session({
     store:MongoStore.create({
         mongoUrl:options.mongo.url
@@ -30,9 +32,14 @@ app.use(session({
     secret:"claveSecreta",
     resave:true,
     saveUninitialized:true
-}))
+}));
 
-//configuracion de handlebars
+//configuración de passport
+initializePassport();
+app.use(passport.initialize());
+app.use(passport.session());
+
+//configuración de handlebars
 app.engine('.hbs', engine({extname: '.hbs'}));
 app.set('view engine', '.hbs');
 app.set('views', path.join(__dirname,"/views"));
